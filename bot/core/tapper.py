@@ -465,10 +465,13 @@ class Tapper:
                 logger.info(
                     f"{self.tg_client.name} |开始做任务:<light-red>{num}</light-red>,随机延迟<light-red>{random_delay}s</light-red>")
                 await asyncio.sleep(delay=random_delay)
-                resp = await http_client.post(f"https://api.tonpepes.xyz/api/User/DoTask/{num}", json={}, ssl=False)
-                task_json = await resp.json()
-                if task_json.get('code') == 200:
-                    logger.info(f"{self.tg_client.name} |<light-red>{num}</light-red>任务完成!")
+                try:
+                    resp = await http_client.post(f"https://api.tonpepes.xyz/api/User/DoTask/{num}", json={}, ssl=False)
+                    task_json = await resp.json()
+                    if task_json.get('code') == 200:
+                        logger.info(f"{self.tg_client.name} |<light-red>{num}</light-red>任务完成!")
+                except Exception as error:
+                    logger.error(f"{num}做任务失败!<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
 
 
 async def run_tapper(tg_client: Client, proxy: str | None):
