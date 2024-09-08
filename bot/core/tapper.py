@@ -442,7 +442,7 @@ class Tapper:
                 logger.error(f"<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
                 await asyncio.sleep(delay=3)
         # 断开session链接
-        await self.tg_client.disconnect()
+        await http_client.close()
 
     async def SuccessTask(self, http_client: aiohttp.ClientSession):
         try:
@@ -471,7 +471,8 @@ class Tapper:
                     if task_json.get('code') == 200:
                         logger.info(f"{self.tg_client.name} |<light-red>{num}</light-red>任务完成!")
                 except Exception as error:
-                    logger.error(f"{num}做任务失败!<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
+                    logger.error(
+                        f"{num}做任务失败!<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
 
 
 async def run_tapper(tg_client: Client, proxy: str | None):
