@@ -130,7 +130,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-bot/
+bot/config/proxies.txt
 # Spyder project settings
 .spyderproject
 .spyproject
