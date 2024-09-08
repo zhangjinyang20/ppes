@@ -437,7 +437,7 @@ class Tapper:
                 # 获取完成的列表
                 tasks = await self.SuccessTask(http_client=http_client)
                 # 做任务
-                res = await self.makeTask(http_client=http_client, tasks=tasks)
+                await self.makeTask(http_client=http_client, tasks=tasks)
             except Exception as error:
                 logger.error(f"<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
                 await asyncio.sleep(delay=3)
@@ -452,7 +452,6 @@ class Tapper:
             tasks = []
             for task in taskList:
                 changeType = task.get('changeType')
-                logger.info(f"{self.tg_client.name} |SuccessTask:<light-red>{changeType}</light-red>")
                 tasks.append(changeType)
             return tasks
         except Exception as e:
@@ -464,13 +463,12 @@ class Tapper:
             if not tasks.__contains__(num):
                 random_delay = random.randint(1, 5)
                 logger.info(
-                    f"{self.tg_client.name} |开始做任务:<light-red>{num}</light-red>,随机延迟<light-red>{random_delay}</light-red>")
+                    f"{self.tg_client.name} |开始做任务:<light-red>{num}</light-red>,随机延迟<light-red>{random_delay}s</light-red>")
                 await asyncio.sleep(delay=random_delay)
                 resp = await http_client.post(f"https://api.tonpepes.xyz/api/User/DoTask/{num}", json={}, ssl=False)
                 task_json = await resp.json()
                 if task_json.get('code') == 200:
                     logger.info(f"{self.tg_client.name} |<light-red>{num}</light-red>任务完成!")
-        return {}
 
 
 async def run_tapper(tg_client: Client, proxy: str | None):
