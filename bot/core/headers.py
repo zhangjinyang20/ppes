@@ -3,7 +3,7 @@ headers = {
     'Accept-Language': 'ru-RU,ru;q=0.9',
     'Connection': 'keep-alive',
     'Content-Type': 'application/json',
-    'Origin': 'https://telegram.blum.codes',
+    'Origin': 'https://tg.tonpepes.xyz/',
     'Sec-Fetch-Dest': 'empty',
     'Sec-Fetch-Mode': 'cors',
     'Sec-Fetch-Site': 'same-site',
