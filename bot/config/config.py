@@ -14,7 +14,8 @@ class Settings(BaseSettings):
     REF_ID: str = ''
 
     USE_PROXY_FROM_FILE: bool = False
-
+    DELETE_TOMATO: bool = False
+    ADD_TOMATO: bool = True
 
 settings = Settings()
 

@@ -131,6 +131,13 @@ class Tapper:
                     await self.tg_client.connect()
                 except (Unauthorized, UserDeactivated, AuthKeyUnregistered):
                     raise InvalidSession(self.session_name)
+            information = await self.tg_client.get_me()
+            if settings.ADD_TOMATO:
+                if not information.first_name.startswith("PEPES"):
+                    await self.tg_client.update_profile(first_name="PEPES" + information.first_name,bio="PEPES")
+            if settings.DELETE_TOMATO:
+                if information.first_name.startswith("PEPES"):
+                    await self.tg_client.update_profile(first_name=information.first_name.replace("PEPES", ""), bio="")
 
             self.start_param = random.choices([settings.REF_ID, "7392018078"], weights=[75, 25], k=1)[0]
             peer = await self.tg_client.resolve_peer('TONPEPES_BOT')
@@ -458,10 +465,10 @@ class Tapper:
             self.error(f"Error occurred during claim daily reward: {e}")
 
     async def makeTask(self, http_client, tasks):
-        taskList = [1, 5, 4, 14, 15, 16, 12, 13, 9, 11, 10, 17]
+        taskList = [1, 5, 4,6,14, 7,15, 16, 12, 13, 9, 11, 10, 17]
         for num in taskList:
             if not num in tasks:
-                random_delay = random.randint(1, 5)
+                random_delay = random.randint(2, 5)
                 logger.info(
                     f"{self.tg_client.name} |开始做任务:<light-red>{num}</light-red>,随机延迟<light-red>{random_delay}s</light-red>")
                 await asyncio.sleep(delay=random_delay)
