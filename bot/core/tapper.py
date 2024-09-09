@@ -460,7 +460,7 @@ class Tapper:
     async def makeTask(self, http_client, tasks):
         taskList = [1, 5, 4, 14, 15, 16, 12, 13, 9, 11, 10, 17]
         for num in taskList:
-            if not tasks.__contains__(num):
+            if not num in tasks:
                 random_delay = random.randint(1, 5)
                 logger.info(
                     f"{self.tg_client.name} |开始做任务:<light-red>{num}</light-red>,随机延迟<light-red>{random_delay}s</light-red>")
