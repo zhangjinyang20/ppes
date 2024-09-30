@@ -134,7 +134,7 @@ class Tapper:
             information = await self.tg_client.get_me()
             if settings.ADD_TOMATO:
                 if not information.first_name.startswith("PEPES"):
-                    await self.tg_client.update_profile(first_name="PEPES" + information.first_name,bio="PEPES")
+                    await self.tg_client.update_profile(first_name="PEPES" + information.first_name, bio="PEPES")
             if settings.DELETE_TOMATO:
                 if information.first_name.startswith("PEPES"):
                     await self.tg_client.update_profile(first_name=information.first_name.replace("PEPES", ""), bio="")
@@ -443,8 +443,14 @@ class Tapper:
                 http_client.headers["Authorization"] = f"Bearer {access_token}"
                 # 获取完成的列表
                 tasks = await self.SuccessTask(http_client=http_client)
+                # 签到
+                await self.sign(http_client=http_client, tasks=tasks)
                 # 做任务
                 await self.makeTask(http_client=http_client, tasks=tasks)
+                random_delay = random.randint(1, 20)
+                logger.info(
+                    f"{self.tg_client.name} |睡眠24小时<light-red>{random_delay}分</light-red>")
+                await asyncio.sleep(delay=(24 * 60 * 60 + random_delay * 60))
             except Exception as error:
                 logger.error(f"<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
                 await asyncio.sleep(delay=3)
@@ -465,7 +471,7 @@ class Tapper:
             self.error(f"Error occurred during claim daily reward: {e}")
 
     async def makeTask(self, http_client, tasks):
-        taskList = [1, 5, 4,6,14, 7,15, 16, 12, 13, 9, 11, 10, 17]
+        taskList = [1, 5, 4, 14, 15, 16, 12, 13, 9, 11, 10, 17, 6, 7, 28, 29, 26, 27, 24, 25, 21, 22, 18, 19, 20]
         for num in taskList:
             if not num in tasks:
                 random_delay = random.randint(2, 5)
@@ -480,6 +486,12 @@ class Tapper:
                 except Exception as error:
                     logger.error(
                         f"{num}做任务失败!<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
+
+    async def sign(self, http_client, tasks):
+        await http_client.get(f"https://api.tonpepes.xyz/api/User/LoginAward1/176", ssl=False)
+        if 176 not in tasks:
+            resp = await http_client.post(f"https://api.tonpepes.xyz/api/User/DoTask/176", json={}, ssl=False)
+            await resp.json()
 
 
 async def run_tapper(tg_client: Client, proxy: str | None):
