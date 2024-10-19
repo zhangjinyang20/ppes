@@ -471,7 +471,7 @@ class Tapper:
             self.error(f"Error occurred during claim daily reward: {e}")
 
     async def makeTask(self, http_client, tasks):
-        taskList = [1, 5, 4, 14, 15, 16, 12, 13, 9, 11, 10, 17, 6, 7, 28, 29, 26, 27, 24, 25, 21, 22, 18, 19, 20]
+        taskList = [ 1, 3, 5, 4, 12, 13, 10, 9, 11, 17, 14, 15, 16, 6, 7, 18, 19, 20, 22, 21, 28, 29, 26, 27, 24, 25, 37, 38, 39, 40, 30, 31, 33, 32, 34, 35, 36]
         for num in taskList:
             if not num in tasks:
                 random_delay = random.randint(2, 5)
@@ -488,9 +488,9 @@ class Tapper:
                         f"{num}做任务失败!<light-yellow>{self.session_name}</light-yellow> | Unknown error: {error}")
 
     async def sign(self, http_client, tasks):
-        await http_client.get(f"https://api.tonpepes.xyz/api/User/LoginAward1/176", ssl=False)
-        if 176 not in tasks:
-            resp = await http_client.post(f"https://api.tonpepes.xyz/api/User/DoTask/176", json={}, ssl=False)
+        await http_client.get(f"https://api.tonpepes.xyz/api/User/LoginAward1/177", ssl=False)
+        if 177 not in tasks:
+            resp = await http_client.post(f"https://api.tonpepes.xyz/api/User/DoTask/177", json={}, ssl=False)
             await resp.json()
 
 
